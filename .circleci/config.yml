@@ -1,0 +1,92 @@
+version: 2.1
+
+commands:
+  install_dependencies:
+    description: 'Install dependencies'
+    steps:
+      - run: apk add ca-certificates # needed, otherwise problem saving/restoring caches
+      - restore_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+      - run: |
+          yarn install --frozen-lockfile --no-progress --cache-folder .yarn
+          yarn ng --version
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - .yarn
+      - save_cache:
+          key: node-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+jobs:
+  prepare:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - install_dependencies
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  lint:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run: apk add ca-certificates # needed, otherwise problem saving/restoring caches
+      - restore_cache:
+          key: node-{{ checksum "yarn.lock" }}
+      - run: yarn lint
+
+  test:
+    docker:
+      - image: esanzgar/node-chromium
+    steps:
+      - checkout
+      - run: apk add ca-certificates # needed, otherwise problem saving/restoring caches
+      - restore_cache:
+          key: node-{{ checksum "yarn.lock" }}
+      - run: yarn test --progress=false --karma-config=src/karma_chromium.conf.js
+      - store_artifacts:
+          path: coverage
+
+  build:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      - run: apk add ca-certificates # needed, otherwise problem saving/restoring caches
+      - restore_cache:
+          key: node-{{ checksum "yarn.lock" }}
+      - run: yarn build --progress=false
+      - store_artifacts:
+          path: dist/workout
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - prepare
+      - lint:
+          requires:
+            - prepare
+      - test:
+          requires:
+            - prepare
+      - build:
+          requires:
+            - test
+      #    filters:
+      #      branches:
+      #        ignore:
+      #          - develop
+      #          - /feature-.*/
+      # - deploy:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
