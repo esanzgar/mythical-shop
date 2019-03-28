@@ -9,9 +9,10 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <a mat-list-item routerLink="/shop">Shop</a>
+      <a mat-list-item routerLink="/cart">Cart</a>
+      <!--a mat-list-item [routerLink]=['/shop']>Shop</a>
+      <a mat-list-item [routerLink]=['/cart']>Cart</a-->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -25,7 +26,7 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>mythical-shop</span>
+      <span>Mythical Shop</span>
     </mat-toolbar>
     <!-- Add Content Here -->
   </mat-sidenav-content>

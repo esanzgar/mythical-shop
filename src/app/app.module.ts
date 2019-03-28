@@ -3,17 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './material/material.module';
 
 import { RootComponent } from './containers/root/root.component';
-
-import { LayoutModule } from '@angular/cdk/layout';
-import {
-  MatToolbarModule,
-  MatButtonModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatListModule
-} from '@angular/material';
 
 @NgModule({
   declarations: [RootComponent],
@@ -21,12 +13,7 @@ import {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [RootComponent]
