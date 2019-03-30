@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CartRoutingModule } from './cart-routing.module';
 import { MaterialModule } from '../material/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { CartComponent } from './containers/cart/cart.component';
 
@@ -13,7 +14,8 @@ import { CartComponent } from './containers/cart/cart.component';
     CommonModule,
     ReactiveFormsModule,
     CartRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class CartModule {}
