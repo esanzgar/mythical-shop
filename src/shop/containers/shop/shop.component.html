@@ -1,4 +1,5 @@
 <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <div *ngFor="let product of (products | async)" {{product | json }}></div>
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Shipping Information</mat-card-title>

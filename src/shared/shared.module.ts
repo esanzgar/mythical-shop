@@ -10,6 +10,7 @@ import { CartService } from './services/cart/cart.service';
 import { ProductsService } from './services/products/products.service';
 import { DiscountService } from './services/discount/discount.service';
 import { CurrencyService } from './services/currency/currency.service';
+import { HerokuInterceptor } from './services/heroku-interceptor/heroku-interceptor';
 
 import { GrandTotalComponent } from './components/grand-total/grand-total.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
@@ -40,7 +41,8 @@ import { OrderComponent } from './components/order/order.component';
     CartService,
     ProductsService,
     DiscountService,
-    CurrencyService
+    CurrencyService,
+    HerokuInterceptor
   ]
 })
 export class SharedModule {}
