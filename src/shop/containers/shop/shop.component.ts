@@ -21,13 +21,10 @@ export class ShopComponent implements OnInit, OnDestroy {
     search: null
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private _productsService: ProductsService
-  ) {}
+  constructor(private fb: FormBuilder, private _products: ProductsService) {}
 
   ngOnInit() {
-    this.products$ = this._productsService
+    this.products$ = this._products
       .list()
       .pipe(finalize(() => (this.waiting = false)));
   }
