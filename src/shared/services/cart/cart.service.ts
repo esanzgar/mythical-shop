@@ -34,10 +34,20 @@ export class CartService {
   }
 
   update(product: Product, quantity: number) {
-    const updatedProduct: CartItem = { ...product, quantity: quantity };
-    this._cart = { ...this._cart, [product.id]: updatedProduct };
+    if (quantity <= 0) {
+      this._cart = { ...this._cart };
+      delete this._cart[product.id];
+    } else {
+      const updatedProduct: CartItem = { ...product, quantity: quantity };
+      this._cart = { ...this._cart, [product.id]: updatedProduct };
+    }
+
     this._store.set('cart', this._cart);
     window.localStorage.setItem(this.keyname, JSON.stringify(this._cart));
+  }
+
+  clear() {
+    this._setCartInStore(null);
   }
 
   private _setCartInStore(value: string | null) {
