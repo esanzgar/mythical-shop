@@ -1,0 +1,25 @@
+<ng-container *ngIf="waiting">
+  <mshop-waiting></mshop-waiting>
+</ng-container>
+
+<mat-card class="shopping-card">
+  <ng-container *ngIf="notFound; else found">
+    <mat-card-header>
+      <mat-card-title>Sorry product no found</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <a routerLink="/shop">Browse products</a>
+    </mat-card-content>
+  </ng-container>
+
+  <ng-template #found>
+    <ng-container *ngIf="(product$ | async) as product">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        TODO
+      </mat-card-content>
+    </ng-container>
+  </ng-template>
+</mat-card>

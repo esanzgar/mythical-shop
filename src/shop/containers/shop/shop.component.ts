@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import {
   ProductsService,
@@ -13,43 +14,23 @@ import {
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  products: Observable<Product[]>;
+  waiting = true;
+  products$!: Observable<Product[]>;
 
-  addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [
-      null,
-      Validators.compose([
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(5)
-      ])
-    ],
-    shipping: ['free', Validators.required]
+  form = this.fb.group({
+    search: null
   });
-
-  hasUnitNumber = false;
-
-  states = [{ name: 'Alabama', abbreviation: 'AL' }];
 
   constructor(
     private fb: FormBuilder,
     private _productsService: ProductsService
-  ) {
-    this.products = this._productsService.list();
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.products$ = this._productsService
+      .list()
+      .pipe(finalize(() => (this.waiting = false)));
+  }
 
   ngOnDestroy() {}
-
-  onSubmit() {
-    alert('Thanks!');
-  }
 }

@@ -16,19 +16,22 @@ import { GrandTotalComponent } from './components/grand-total/grand-total.compon
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 import { OrderComponent } from './components/order/order.component';
+import { WaitingComponent } from './components/waiting/waiting.component';
 
 @NgModule({
   declarations: [
     GrandTotalComponent,
     ProductDetailsComponent,
     ProductSummaryComponent,
-    OrderComponent
+    OrderComponent,
+    WaitingComponent
   ],
   exports: [
     GrandTotalComponent,
     ProductDetailsComponent,
     ProductSummaryComponent,
-    OrderComponent
+    OrderComponent,
+    WaitingComponent
   ],
   imports: [
     CommonModule,

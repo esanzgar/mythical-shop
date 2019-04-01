@@ -7,9 +7,10 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { ShopComponent } from './containers/shop/shop.component';
+import { ShopDetailsComponent } from './containers/shop-details/shop-details.component';
 
 @NgModule({
-  declarations: [ShopComponent],
+  declarations: [ShopComponent, ShopDetailsComponent],
   imports: [
     CommonModule,
     ShopRoutingModule,
