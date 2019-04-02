@@ -23,6 +23,18 @@
         alt="Photo of a Shiba Inu"
       />
       <mat-card-content>
+        <div class="flex">
+          <span class="flex-spacer"></span>
+          <mshop-order
+            [product]="product"
+            [cart]="cart"
+            (productUpdate)="onProductUpdate(product, $event)"
+          ></mshop-order>
+          <button mat-icon-button (click)="onProductUpdate(product, 0)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
         <!--lorem-->
         <p>
           Sem, tristique sed, semper in, hendrerit non, sem. Vivamus dignissim
