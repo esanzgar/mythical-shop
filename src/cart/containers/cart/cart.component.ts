@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { finalize, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
 import {
@@ -16,12 +16,10 @@ import {
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit, OnDestroy {
-  waiting = true;
   cart!: Cart;
   products$: Observable<CartItem[]> = this._store.select('cart').pipe(
     tap(cart => (this.cart = cart)),
-    map(cart => Object.values(cart)),
-    finalize(() => (this.waiting = false))
+    map(cart => Object.values(cart))
   );
 
   form = this.fb.group({
@@ -38,8 +36,9 @@ export class CartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  onProductUpdate(product: CartItem, quantity: number) {
-    this._cart.update(product, quantity);
+  onProductUpdate(product: CartItem, quantity: string) {
+    console.log(product, +quantity);
+    this._cart.update(product, +quantity);
   }
 
   ngOnDestroy() {
@@ -49,5 +48,9 @@ export class CartComponent implements OnInit, OnDestroy {
   checkout() {
     window.alert('TO BE IMPLEMENTED: currently, it clears the cart');
     this._cart.clear();
+  }
+
+  trackByFn(index: number, item: CartItem) {
+    return item.id;
   }
 }

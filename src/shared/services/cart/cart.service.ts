@@ -48,6 +48,7 @@ export class CartService {
 
   clear() {
     this._setCartInStore(null);
+    window.localStorage.setItem(this.keyname, JSON.stringify(this._cart));
   }
 
   private _setCartInStore(value: string | null) {

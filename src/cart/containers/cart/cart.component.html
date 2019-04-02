@@ -1,18 +1,19 @@
-<ng-container *ngIf="waiting">
-  <mshop-waiting></mshop-waiting>
-</ng-container>
-
 <mat-card class="shopping-card">
   <mat-card-header>
     <mat-card-title>Cart</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <mat-list>
-      <ng-container *ngIf="(products$ | async) as products">
-        <ng-container *ngIf="products.length === 0"> </ng-container>
+  <ng-container *ngIf="(products$ | async) as products">
+    <mat-card-content>
+      <mat-list>
+        <ng-container *ngIf="products.length === 0">
+          <mat-icon aria-label="Sad face icon">face</mat-icon>
+          There are no items in your cart.
+        </ng-container>
         <mat-nav-list>
-          <mat-list-item *ngFor="let product of products">
-            <h3 matLine routerLink="{{ product.id }}">{{ product.name }}</h3>
+          <mat-list-item *ngFor="let product of products; trackBy: trackByFn">
+            <h3 matLine routerLink="{{ '/shop/' + product.id }}">
+              {{ product.name }}
+            </h3>
             <p matLine>
               <span> {{ product.usdPrice | currency: 'GBP' }} </span>
               <mshop-order
@@ -23,10 +24,17 @@
             </p>
           </mat-list-item>
         </mat-nav-list>
-      </ng-container>
-    </mat-list>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button button="button" (click)="checkout()">CHECKOUT</button>
-  </mat-card-actions>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        [disabled]="products.length === 0"
+        mat-button
+        button="button"
+        (click)="checkout()"
+      >
+        CHECKOUT
+      </button>
+    </mat-card-actions>
+  </ng-container>
 </mat-card>
