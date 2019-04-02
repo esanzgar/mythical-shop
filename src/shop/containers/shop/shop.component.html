@@ -7,6 +7,7 @@
     <mat-card-title>Products</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <mshop-grand-total></mshop-grand-total>
     <mat-list>
       <ng-container *ngIf="(products$ | async) as products">
         <mat-nav-list>

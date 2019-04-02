@@ -13,7 +13,7 @@ import { DiscountService } from './services/discount/discount.service';
 import { CurrencyService } from './services/currency/currency.service';
 import { HerokuInterceptor } from './services/heroku-interceptor/heroku-interceptor';
 
-import { GrandTotalComponent } from './components/grand-total/grand-total.component';
+import { GrandTotalComponent } from './containers/grand-total/grand-total.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 import { OrderComponent } from './components/order/order.component';
