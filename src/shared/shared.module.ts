@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,14 +43,20 @@ import { ProductListItemComponent } from './components/product-list-item/product
     HttpClientModule,
     RouterModule,
     MaterialModule
-  ],
-  providers: [
-    ShopService,
-    CartService,
-    ProductsService,
-    DiscountService,
-    CurrencyService,
-    HerokuInterceptor
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        ShopService,
+        CartService,
+        ProductsService,
+        DiscountService,
+        CurrencyService,
+        HerokuInterceptor
+      ]
+    };
+  }
+}

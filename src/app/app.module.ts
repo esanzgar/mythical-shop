@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from '../material/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { RootComponent } from './containers/root/root.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -14,7 +15,8 @@ import { NavComponent } from './components/nav/nav.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule.forRoot()
   ],
   providers: [],
   bootstrap: [RootComponent]

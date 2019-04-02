@@ -15,6 +15,9 @@ export type Cart = Record<string, CartItem>;
   providedIn: 'root'
 })
 export class CartService {
+  // TODO: replace all reference of window object for an injection token (so it
+  // works in other context like server side rendering, e.g. Angular Universal)
+
   private readonly keyname = 'mshop-cart';
 
   private _cart!: Cart;
@@ -22,11 +25,10 @@ export class CartService {
   constructor(private _store: StoreService) {}
 
   init(): Observable<StorageEvent> {
-    // TODO: replace reference of window object for an injection token (so it works in other context like server side rendering, e.g. Angular Universal)
     this._setCartInStore(window.localStorage.getItem(this.keyname));
 
-    // The follows allows inter-window communication
-    // The event is only triggered by a different window
+    // This allows inter-window communication
+    // The storage event is only triggered by a different window
     return fromEvent<StorageEvent>(window, 'storage').pipe(
       filter(event => event.key === this.keyname),
       tap(event => this._setCartInStore(event.newValue))

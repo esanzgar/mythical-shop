@@ -17,9 +17,11 @@ import {
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  cart!: Cart;
   waiting = true;
-  products$!: Observable<Product[]>;
+  products$: Observable<Product[]> = this._products
+    .list()
+    .pipe(finalize(() => (this.waiting = false)));
+  cart!: Cart;
 
   form = this.fb.group({
     search: null
@@ -35,10 +37,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.products$ = this._products
-      .list()
-      .pipe(finalize(() => (this.waiting = false)));
-
     this._subscriptions = [
       this._store.select('cart').subscribe(cart => (this.cart = cart))
     ];
