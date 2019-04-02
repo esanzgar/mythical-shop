@@ -9,7 +9,8 @@ import { MaterialModule } from '../material/material.module';
 import { ShopService } from './services/shop/shop.service';
 import { CartService } from './services/cart/cart.service';
 import { ProductsService } from './services/products/products.service';
-import { DiscountService } from './services/discount/discount.service';
+import { BundleDiscountsService } from './services/bundle-discounts/bundle-discounts.service';
+import { ProductContentService} from './services/product-content/product-content.service';
 import { CurrencyService } from './services/currency/currency.service';
 import { HerokuInterceptor } from './services/heroku-interceptor/heroku-interceptor';
 
@@ -19,6 +20,7 @@ import { ProductSummaryComponent } from './components/product-summary/product-su
 import { OrderComponent } from './components/order/order.component';
 import { WaitingComponent } from './components/waiting/waiting.component';
 import { ProductListItemComponent } from './components/product-list-item/product-list-item.component';
+import { HintDiscountComponent } from './containers/hint-discount/hint-discount.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ProductListItemComponent } from './components/product-list-item/product
     ProductSummaryComponent,
     OrderComponent,
     WaitingComponent,
-    ProductListItemComponent
+    ProductListItemComponent,
+    HintDiscountComponent
   ],
   exports: [
     GrandTotalComponent,
@@ -35,7 +38,8 @@ import { ProductListItemComponent } from './components/product-list-item/product
     ProductSummaryComponent,
     OrderComponent,
     WaitingComponent,
-    ProductListItemComponent
+    ProductListItemComponent,
+    HintDiscountComponent
   ],
   imports: [
     CommonModule,
@@ -53,8 +57,9 @@ export class SharedModule {
         ShopService,
         CartService,
         ProductsService,
-        DiscountService,
+        BundleDiscountsService,
         CurrencyService,
+        ProductContentService,
         HerokuInterceptor
       ]
     };

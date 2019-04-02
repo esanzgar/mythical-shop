@@ -18,10 +18,10 @@ import {
 })
 export class ShopComponent implements OnInit, OnDestroy {
   waiting = true;
+  cart!: Cart;
   products$: Observable<Product[]> = this._products
     .list()
     .pipe(finalize(() => (this.waiting = false)));
-  cart!: Cart;
 
   form = this.fb.group({
     search: null

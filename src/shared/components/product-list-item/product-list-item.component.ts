@@ -19,6 +19,7 @@ import { Cart } from '../../services/cart/cart.service';
 export class ProductListItemComponent implements OnInit {
   @Input()
   set product(newProduct: Product) {
+    console.log(newProduct);
     this._product = newProduct;
   }
 
