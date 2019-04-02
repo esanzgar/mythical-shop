@@ -10,19 +10,13 @@
     <mat-list>
       <ng-container *ngIf="(products$ | async) as products">
         <mat-nav-list>
-          <mat-list-item *ngFor="let product of products">
-            <h3 matLine routerLink="{{ '/shop/' + product.id }}">
-              {{ product.name }}
-            </h3>
-            <p matLine>
-              <span> {{ product.usdPrice | currency: 'GBP' }} </span>
-              <mshop-order
-                [product]="product"
-                [cart]="cart"
-                (productUpdate)="onProductUpdate(product, $event)"
-              ></mshop-order>
-            </p>
-          </mat-list-item>
+          <mshop-product-list-item
+            *ngFor="let product of products"
+            [product]="product"
+            [cart]="cart"
+            (productUpdate)="onProductUpdate(product, $event)"
+          >
+          </mshop-product-list-item>
         </mat-nav-list>
       </ng-container>
     </mat-list>

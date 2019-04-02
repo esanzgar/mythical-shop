@@ -25,7 +25,9 @@ export class OrderComponent {
     const prod = this.product ? newCart[this.product.id] : null;
     if (prod) {
       this.form.patchValue({ quantity: prod.quantity });
+      return;
     }
+    this.form.patchValue({ quantity: 0 });
   }
 
   form = this._fb.group({
@@ -37,7 +39,7 @@ export class OrderComponent {
 
   constructor(private _fb: FormBuilder) {}
 
-  onChange(quantity: number) {
-    this.productUpdate.emit(quantity);
+  onChange(quantity: string) {
+    this.productUpdate.emit(+quantity);
   }
 }

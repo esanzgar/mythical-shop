@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -17,6 +18,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 import { OrderComponent } from './components/order/order.component';
 import { WaitingComponent } from './components/waiting/waiting.component';
+import { ProductListItemComponent } from './components/product-list-item/product-list-item.component';
 
 @NgModule({
   declarations: [
@@ -24,19 +26,22 @@ import { WaitingComponent } from './components/waiting/waiting.component';
     ProductDetailsComponent,
     ProductSummaryComponent,
     OrderComponent,
-    WaitingComponent
+    WaitingComponent,
+    ProductListItemComponent
   ],
   exports: [
     GrandTotalComponent,
     ProductDetailsComponent,
     ProductSummaryComponent,
     OrderComponent,
-    WaitingComponent
+    WaitingComponent,
+    ProductListItemComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule,
     MaterialModule
   ],
   providers: [

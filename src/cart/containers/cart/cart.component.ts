@@ -36,9 +36,8 @@ export class CartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  onProductUpdate(product: CartItem, quantity: string) {
-    console.log(product, +quantity);
-    this._cart.update(product, +quantity);
+  onProductUpdate(product: CartItem, quantity: number) {
+    this._cart.update(product, quantity);
   }
 
   ngOnDestroy() {

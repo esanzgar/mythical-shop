@@ -1,0 +1,11 @@
+.flex {
+  display: flex !important;
+}
+
+.flex-spacer {
+  flex-grow: 0.95;
+}
+
+.delete-button {
+  vertical-align: super;
+}
