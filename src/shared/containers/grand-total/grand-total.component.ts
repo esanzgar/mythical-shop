@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, mergeMap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
+import { BundleDiscountsService } from '../../services/bundle-discounts/bundle-discounts.service';
 import { Cart } from '../../services/cart/cart.service';
 
 @Component({
@@ -12,12 +13,15 @@ import { Cart } from '../../services/cart/cart.service';
 })
 export class GrandTotalComponent implements OnInit, OnDestroy {
   numberItems = 0;
-  numberDiscounts = 0;
+  numberDiscounts$ = this._bundle.discountsInCart();
   total = 0;
 
   private _subscriptions: Subscription[] = [];
 
-  constructor(private _store: StoreService) {}
+  constructor(
+    private _store: StoreService,
+    private _bundle: BundleDiscountsService
+  ) {}
 
   ngOnInit() {
     const total$ = this._store.select('cart').pipe(
@@ -25,7 +29,12 @@ export class GrandTotalComponent implements OnInit, OnDestroy {
       tap(items => (this.numberItems = items.length)),
       map(items => items.map(item => item.quantity * item.usdPrice)),
       map(amounts => amounts.reduce((acc, cur) => (acc += cur), 0)),
-      tap(total => (this.total = total))
+      mergeMap(amount =>
+        this.numberDiscounts$.pipe(
+          map(numberDiscounts => amount - numberDiscounts * 0.1 * amount),
+          tap(total => (this.total = total))
+        )
+      )
     );
     this._subscriptions = [total$.subscribe()];
   }

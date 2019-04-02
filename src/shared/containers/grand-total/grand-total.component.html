@@ -1,17 +1,20 @@
 <div class="flex">
   <span class="flex-spacer"></span>
-  <mat-chip-list
-    aria-label="Number of discounts applied"
-    *ngIf="numberDiscounts > 0"
-  >
-    <mat-chip [disabled]="numberDiscounts === 0" color="primary" selected
-      >{{ numberDiscounts }} discounts applied</mat-chip
+  <ng-container *ngIf="(numberDiscounts$ | async) as numberDiscounts">
+    <mat-chip-list
+      aria-label="Number of discounts applied"
+      *ngIf="numberDiscounts > 0"
     >
-  </mat-chip-list>
+      <mat-chip [disabled]="numberDiscounts === 0" color="primary" selected
+        >{{ numberDiscounts }} discounts applied</mat-chip
+      >
+    </mat-chip-list>
+  </ng-container>
   <span
     [matBadge]="numberItems"
     [matBadgeHidden]="numberItems <= 0"
     matBadgeColor="accent"
+    matBadgeOverlap="false"
     >Total: {{ total | currency: 'GBP' }}</span
   >
 </div>
