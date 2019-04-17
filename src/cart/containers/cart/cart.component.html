@@ -2,9 +2,9 @@
   <mat-card-header>
     <mat-card-title>Cart</mat-card-title>
   </mat-card-header>
-  <ng-container *ngIf="(products$ | async) as products">
+  <ng-container *ngIf="currency && (products$ | async) as products">
     <mat-card-content>
-      <mshop-grand-total></mshop-grand-total>
+      <mshop-grand-total [currency]="currency"></mshop-grand-total>
       <mat-list>
         <ng-container *ngIf="products.length === 0">
           <mat-icon aria-label="Sad face icon">face</mat-icon>
@@ -15,6 +15,7 @@
             *ngFor="let product of products; trackBy: trackByFn"
             [product]="product"
             [cart]="cart"
+            [currency]="currency"
             (productUpdate)="onProductUpdate(product, $event)"
           >
           </mshop-product-list-item>

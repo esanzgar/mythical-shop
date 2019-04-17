@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CartService } from '../../../shared/services/cart/cart.service';
+import { CurrencyService } from '../../../shared/services/currency/currency.service';
 
 @Component({
   selector: 'mshop-root',
@@ -19,11 +20,15 @@ export class RootComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private _cart: CartService
+    private _cart: CartService,
+    private _currency: CurrencyService
   ) {}
 
   ngOnInit() {
-    this._subscription = [this._cart.init().subscribe()];
+    this._subscription = [
+      this._cart.init().subscribe(),
+      this._currency.init().subscribe()
+    ];
   }
 
   ngOnDestroy() {

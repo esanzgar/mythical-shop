@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { Product } from '../../services/products/products.service';
 import { Cart } from '../../services/cart/cart.service';
@@ -40,6 +40,17 @@ export class OrderComponent {
   constructor(private _fb: FormBuilder) {}
 
   onChange(quantity: string) {
+    this.productUpdate.emit(+quantity);
+  }
+
+  update(amount: number) {
+    const quantityForm = this.form.get('quantity') as FormControl;
+    const quantity = quantityForm.value + amount;
+    if (quantity <= 0) {
+      return;
+    }
+
+    this.form.patchValue({ quantity });
     this.productUpdate.emit(+quantity);
   }
 }

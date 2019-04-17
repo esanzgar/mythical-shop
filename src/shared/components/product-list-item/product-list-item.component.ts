@@ -9,6 +9,7 @@ import {
 
 import { Product } from '../../services/products/products.service';
 import { Cart } from '../../services/cart/cart.service';
+import { Currency } from '../../services/currency/currency.service';
 
 @Component({
   selector: 'mshop-product-list-item',
@@ -19,7 +20,6 @@ import { Cart } from '../../services/cart/cart.service';
 export class ProductListItemComponent implements OnInit {
   @Input()
   set product(newProduct: Product) {
-    console.log(newProduct);
     this._product = newProduct;
   }
 
@@ -36,11 +36,21 @@ export class ProductListItemComponent implements OnInit {
     return this._cart;
   }
 
+  @Input()
+  set currency(newCurrency: Currency) {
+    this._currency = newCurrency;
+  }
+
+  get currency() {
+    return this._currency;
+  }
+
   @Output()
   productUpdate = new EventEmitter<number>();
 
   private _product!: Product;
   private _cart!: Cart;
+  private _currency!: Currency;
 
   constructor() {}
 

@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, tap, mergeMap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
 import { BundleDiscountsService } from '../../services/bundle-discounts/bundle-discounts.service';
 import { Cart } from '../../services/cart/cart.service';
+import { Currency } from '../../services/currency/currency.service';
 
 @Component({
   selector: 'mshop-grand-total',
@@ -12,6 +13,17 @@ import { Cart } from '../../services/cart/cart.service';
   styleUrls: ['./grand-total.component.css']
 })
 export class GrandTotalComponent implements OnInit, OnDestroy {
+  private _currency!: Currency;
+
+  @Input()
+  set currency(value: Currency) {
+    this._currency = value;
+  }
+
+  get currency() {
+    return this._currency;
+  }
+
   numberItems = 0;
   numberDiscounts$ = this._bundle.discountsInCart();
   total = 0;

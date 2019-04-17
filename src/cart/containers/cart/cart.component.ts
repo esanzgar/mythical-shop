@@ -9,6 +9,10 @@ import {
   CartItem,
   CartService
 } from '../../../shared/services/cart/cart.service';
+import {
+  Currency,
+  CurrencyService
+} from '../../../shared/services/currency/currency.service';
 
 @Component({
   selector: 'mshop-cart',
@@ -17,6 +21,7 @@ import {
 })
 export class CartComponent implements OnInit, OnDestroy {
   cart!: Cart;
+  currency!: Currency;
   products$: Observable<CartItem[]> = this._store.select('cart').pipe(
     tap(cart => (this.cart = cart)),
     map(cart => Object.values(cart))
@@ -34,7 +39,13 @@ export class CartComponent implements OnInit, OnDestroy {
     private _store: StoreService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._subscriptions = [
+      this._store
+        .select('currency')
+        .subscribe(currency => (this.currency = currency))
+    ];
+  }
 
   onProductUpdate(product: CartItem, quantity: number) {
     this._cart.update(product, quantity);

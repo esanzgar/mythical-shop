@@ -1,0 +1,28 @@
+<ng-container *ngIf="(bundles$ | async) as bundles">
+  <mat-card *ngIf="bundles.length" class="shopping-card">
+    <mat-card-header>
+      <mat-card-title
+        >Get 10% extra on your basket for each one of these
+        bundles</mat-card-title
+      >
+    </mat-card-header>
+    <ng-container *ngIf="(currency$ | async) as currency">
+      <mat-card-content>
+        <div *ngFor="let bundle of bundles; last as last" class="spacer">
+          To get '{{ bundle }}' bundle you need:
+          <mat-nav-list *ngIf="(getBundleProducts(bundle) | async) as products">
+            <mshop-product-list-item
+              *ngFor="let product of products"
+              [product]="product"
+              [currency]="currency"
+              [cart]="cart$ | async"
+              (productUpdate)="onProductUpdate(product, $event)"
+            >
+            </mshop-product-list-item>
+          </mat-nav-list>
+          <mat-divider *ngIf="!last"></mat-divider>
+        </div>
+      </mat-card-content>
+    </ng-container>
+  </mat-card>
+</ng-container>

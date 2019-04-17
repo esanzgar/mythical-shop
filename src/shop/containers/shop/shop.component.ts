@@ -5,6 +5,10 @@ import { finalize } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
 import { Cart, CartService } from '../../../shared/services/cart/cart.service';
+import {
+  Currency,
+  CurrencyService
+} from '../../../shared/services/currency/currency.service';
 
 import {
   ProductsService,
@@ -17,8 +21,9 @@ import {
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  waiting = true;
   cart!: Cart;
+  currency!: Currency;
+  waiting = true;
   products$: Observable<Product[]> = this._products
     .list()
     .pipe(finalize(() => (this.waiting = false)));
@@ -38,7 +43,10 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._subscriptions = [
-      this._store.select('cart').subscribe(cart => (this.cart = cart))
+      this._store.select('cart').subscribe(cart => (this.cart = cart)),
+      this._store
+        .select('currency')
+        .subscribe(currency => (this.currency = currency))
     ];
   }
 

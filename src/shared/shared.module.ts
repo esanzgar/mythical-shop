@@ -10,36 +10,33 @@ import { ShopService } from './services/shop/shop.service';
 import { CartService } from './services/cart/cart.service';
 import { ProductsService } from './services/products/products.service';
 import { BundleDiscountsService } from './services/bundle-discounts/bundle-discounts.service';
-import { ProductContentService} from './services/product-content/product-content.service';
+import { ProductContentService } from './services/product-content/product-content.service';
 import { CurrencyService } from './services/currency/currency.service';
 import { HerokuInterceptor } from './services/heroku-interceptor/heroku-interceptor';
 
 import { GrandTotalComponent } from './containers/grand-total/grand-total.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
-import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 import { OrderComponent } from './components/order/order.component';
 import { WaitingComponent } from './components/waiting/waiting.component';
 import { ProductListItemComponent } from './components/product-list-item/product-list-item.component';
 import { HintDiscountComponent } from './containers/hint-discount/hint-discount.component';
+import { CurrencyRatePipe } from './pipes/currency-rate/currency-rate.pipe';
 
 @NgModule({
   declarations: [
     GrandTotalComponent,
-    ProductDetailsComponent,
-    ProductSummaryComponent,
     OrderComponent,
     WaitingComponent,
     ProductListItemComponent,
-    HintDiscountComponent
+    HintDiscountComponent,
+    CurrencyRatePipe
   ],
   exports: [
     GrandTotalComponent,
-    ProductDetailsComponent,
-    ProductSummaryComponent,
     OrderComponent,
     WaitingComponent,
     ProductListItemComponent,
-    HintDiscountComponent
+    HintDiscountComponent,
+    CurrencyRatePipe
   ],
   imports: [
     CommonModule,

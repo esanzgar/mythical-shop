@@ -2,6 +2,10 @@ form {
   display: inline;
 }
 
+mat-form-field {
+  max-width: 6rem;
+}
+
 input {
-  max-width: 3rem;
+  text-align: right;
 }

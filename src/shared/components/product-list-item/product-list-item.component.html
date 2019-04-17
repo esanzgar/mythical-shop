@@ -3,7 +3,7 @@
   <h4 matLine routerLink="{{ '/shop/' + product.id }}" class="flex">
     {{ product.name }}
     <span class="flex-spacer"></span>
-    <span> {{ product.usdPrice | currency: 'GBP' }} </span>
+    <span> {{ product.usdPrice | currencyRate: currency }} </span>
   </h4>
 
   <mat-action-list>
@@ -13,7 +13,7 @@
       (productUpdate)="onProductUpdate($event)"
     ></mshop-order>
   </mat-action-list>
-  <mat-action-list>
+  <mat-action-list *ngIf="cart[product.id]?.quantity > 0">
     <button class="delete-button" mat-icon-button (click)="onProductUpdate(0)">
       <mat-icon>delete</mat-icon>
     </button>

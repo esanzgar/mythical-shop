@@ -1,9 +1,22 @@
 <form [formGroup]="form">
-  <input
-    type="number"
-    min="0"
-    formControlName="quantity"
-    (change)="onChange(input.value)"
-    #input
-  />
+  <mat-form-field>
+    <button matPrefix mat-icon-button (click)="update(+1)">
+      <mat-icon area-label="Add one item to the shopping cart"
+        >add_circle</mat-icon
+      >
+    </button>
+    <input
+      matInput
+      type="number"
+      min="0"
+      formControlName="quantity"
+      (change)="onChange(input.value)"
+      #input
+    />
+    <button matSuffix mat-icon-button (click)="update(-1)">
+      <mat-icon area-label="Remove one item to the shopping cart"
+        >remove_circle</mat-icon
+      >
+    </button>
+  </mat-form-field>
 </form>

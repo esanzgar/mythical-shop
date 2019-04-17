@@ -3,13 +3,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, pluck } from 'rxjs/operators';
 
 import { Cart } from '../shared/services/cart/cart.service';
+import { Currency } from '../shared/services/currency/currency.service';
 
 export interface Store {
   cart: Cart;
+  currency: Currency;
 }
 
 const state: Store = {
-  cart: {}
+  cart: {},
+  currency: {
+    code: 'USD',
+    name: 'United States dollar',
+    symbol: '$',
+    rate: 1
+  }
 };
 
 @Injectable({
