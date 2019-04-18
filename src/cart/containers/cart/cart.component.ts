@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck, tap } from 'rxjs/operators';
 
+import { StoreService } from '../../../store/store.service';
 import {
   Cart,
   CartItem,
@@ -29,20 +29,22 @@ export class CartComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private _cart: CartService,
-    private _route: ActivatedRoute
+    private _store: StoreService,
+    private _cart: CartService
   ) {}
 
   ngOnInit() {
     this._subscriptions = [
-      this._route.data
+      this._store
+        .select('cart')
         .pipe(
-          tap(({ currency }) => (this.currency = currency)),
-          pluck('cart'),
           tap(cart => (this.cart = cart)),
           tap(cart => (this.products = Object.values(cart)))
         )
-        .subscribe()
+        .subscribe(),
+      this._store
+        .select('currency')
+        .subscribe(currency => (this.currency = currency))
     ];
   }
 

@@ -3,6 +3,7 @@
   <h4 matLine routerLink="{{ '/shop/' + product.id }}" class="flex">
     {{ product.name }}
     <span class="flex-spacer"></span>
+
     <span> {{ product.usdPrice | currencyRate: currency }} </span>
   </h4>
 

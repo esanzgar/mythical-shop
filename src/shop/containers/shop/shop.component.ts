@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
+import { StoreService } from '../../../store/store.service';
 import { Cart, CartService } from '../../../shared/services/cart/cart.service';
 import {
   Currency,
   CurrencyService
 } from '../../../shared/services/currency/currency.service';
-
 import {
   ProductsService,
   Product
@@ -36,20 +35,17 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private _products: ProductsService,
+    private _store: StoreService,
     private _cart: CartService,
-    private _route: ActivatedRoute
+    private _products: ProductsService
   ) {}
 
   ngOnInit() {
     this._subscriptions = [
-      this._route.data
-        .pipe(
-          tap(console.log),
-          tap(({ cart }) => (this.cart = cart)),
-          tap(({ currency }) => (this.currency = currency))
-        )
-        .subscribe()
+      this._store.select('cart').subscribe(cart => (this.cart = cart)),
+      this._store
+        .select('currency')
+        .subscribe(currency => (this.currency = currency))
     ];
   }
 

@@ -13,7 +13,7 @@
   </ng-container>
 
   <ng-template #found>
-    <ng-container *ngIf="(product$ | async) as product">
+    <ng-container *ngIf="cart && currency && (product$ | async) as product">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
       </mat-card-header>
@@ -23,20 +23,24 @@
         alt="Photo of a Shiba Inu"
       />
       <mat-card-content>
+        <mshop-grand-total [currency]="currency"></mshop-grand-total>
         <div class="flex">
           <span class="flex-spacer"></span>
-          <mshop-order
-            [product]="product"
-            [cart]="cart"
-            (productUpdate)="onProductUpdate(product, $event)"
-          ></mshop-order>
-          <button
-            mat-icon-button
-            *ngIf="cart[product.id]"
-            (click)="onProductUpdate(product, 0)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
+          <div>
+            <span> {{ product.usdPrice | currencyRate: currency }} </span>
+            <mshop-order
+              [product]="product"
+              [cart]="cart"
+              (productUpdate)="onProductUpdate(product, $event)"
+            ></mshop-order>
+            <button
+              mat-icon-button
+              *ngIf="cart[product.id]"
+              (click)="onProductUpdate(product, 0)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
 
         <!--lorem-->
