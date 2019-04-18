@@ -47,6 +47,7 @@ export class OrderComponent {
     const quantityForm = this.form.get('quantity') as FormControl;
     const quantity = quantityForm.value + amount;
     if (quantity <= 0) {
+      // if (quantity < 0) {
       return;
     }
 
