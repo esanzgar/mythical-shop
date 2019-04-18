@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { Cart, CartService } from '../../../shared/services/cart/cart.service';
-import { Currency } from '../../../shared/services/currency/currency.service';
+import { StoreService } from '../../../store/store.service';
 import {
   Product,
   ProductsService
@@ -21,13 +21,13 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
   waiting = true;
 
   cart!: Cart;
-  currency!: Currency;
 
   private _subscriptions: Subscription[] = [];
 
   constructor(
     private _route: ActivatedRoute,
     private _products: ProductsService,
+    private _store: StoreService,
     private _cartService: CartService
   ) {}
 
@@ -36,7 +36,7 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
     this._fetchProduct(id);
 
     this._subscriptions = [
-      this._route.data.pipe(map(({ cart }) => (this.cart = cart))).subscribe()
+      this._store.select('cart').subscribe(cart => (this.cart = cart))
     ];
   }
 

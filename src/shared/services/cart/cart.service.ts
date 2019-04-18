@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { fromEvent, Observable, Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { fromEvent, Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
@@ -14,21 +14,25 @@ export type Cart = Record<string, CartItem>;
 @Injectable({
   providedIn: 'root'
 })
-export class CartService implements OnDestroy {
+export class CartService {
   // TODO: replace all reference of window object for an injection token (so it
   // works in other context like server side rendering, e.g. Angular Universal)
 
   private readonly keyname = 'mshop-cart';
 
-  private _cart: Cart = {};
-  private _subscription: Subscription;
+  private _cart!: Cart;
 
-  constructor(private _store: StoreService) {
-    this._subscription = this._init().subscribe();
-  }
+  constructor(private _store: StoreService) {}
 
-  ngOnDestroy() {
-    this._subscription.unsubscribe();
+  init(): Observable<StorageEvent> {
+    this._setCartInStore(window.localStorage.getItem(this.keyname));
+
+    // This allows inter-window communication
+    // The storage event is only triggered by a different window
+    return fromEvent<StorageEvent>(window, 'storage').pipe(
+      filter(event => event.key === this.keyname),
+      tap(event => this._setCartInStore(event.newValue))
+    );
   }
 
   update(product: Product, quantity: number) {
@@ -47,17 +51,6 @@ export class CartService implements OnDestroy {
   clear() {
     this._setCartInStore(null);
     window.localStorage.setItem(this.keyname, JSON.stringify(this._cart));
-  }
-
-  private _init(): Observable<StorageEvent> {
-    this._setCartInStore(window.localStorage.getItem(this.keyname));
-
-    // This allows inter-window communication
-    // The storage event is only triggered by a different window
-    return fromEvent<StorageEvent>(window, 'storage').pipe(
-      filter(event => event.key === this.keyname),
-      tap(event => this._setCartInStore(event.newValue))
-    );
   }
 
   private _setCartInStore(value: string | null) {
