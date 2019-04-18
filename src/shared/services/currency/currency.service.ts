@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 import { map, pluck, concatMap, tap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
@@ -14,12 +15,19 @@ export interface Currency {
 @Injectable({
   providedIn: 'root'
 })
-export class CurrencyService {
-  private _geolocationUrl = 'https://ip2c.org/s';
-  private _countryUrl = 'https://restcountries.eu/rest/v2/alpha';
-  private _exchangeUrl = 'https://api.exchangeratesapi.io';
+export class CurrencyService implements OnDestroy {
+  private readonly _geolocationUrl = 'https://ip2c.org/s';
+  private readonly _countryUrl = 'https://restcountries.eu/rest/v2/alpha';
+  private readonly _exchangeUrl = 'https://api.exchangeratesapi.io';
+  // private _subscription: Subscription;
 
-  constructor(private _http: HttpClient, private _store: StoreService) {}
+  constructor(private _http: HttpClient, private _store: StoreService) {
+    // this._subscription = this._init().subscribe();
+  }
+
+  ngOnDestroy() {
+    // this._subscription.unsubscribe();
+  }
 
   init() {
     return this._http
@@ -52,6 +60,7 @@ export class CurrencyService {
             );
         }),
         tap(newCurrency => this._store.set('currency', newCurrency))
+        // No need of catchError because the store set the default currency to USD.
       );
   }
 }

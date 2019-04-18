@@ -2,36 +2,34 @@
   <mat-card-header>
     <mat-card-title>Cart</mat-card-title>
   </mat-card-header>
-  <ng-container *ngIf="currency && (products$ | async) as products">
-    <mat-card-content>
-      <mshop-grand-total [currency]="currency"></mshop-grand-total>
-      <mat-list>
-        <ng-container *ngIf="products.length === 0">
-          <mat-icon aria-label="Sad face icon">face</mat-icon>
-          There are no items in your cart.
-        </ng-container>
-        <mat-nav-list>
-          <mshop-product-list-item
-            *ngFor="let product of products; trackBy: trackByFn"
-            [product]="product"
-            [cart]="cart"
-            [currency]="currency"
-            (productUpdate)="onProductUpdate(product, $event)"
-          >
-          </mshop-product-list-item>
-        </mat-nav-list>
-      </mat-list>
-    </mat-card-content>
-    <mat-card-actions>
-      <button
-        [disabled]="products.length === 0"
-        mat-button
-        button="button"
-        (click)="checkout()"
-      >
-        CHECKOUT
-      </button>
-    </mat-card-actions>
-  </ng-container>
+  <mat-card-content>
+    <mshop-grand-total [currency]="currency"></mshop-grand-total>
+    <mat-list>
+      <ng-container *ngIf="products.length === 0">
+        <mat-icon aria-label="Sad face icon">face</mat-icon>
+        There are no items in your cart.
+      </ng-container>
+      <mat-nav-list>
+        <mshop-product-list-item
+          *ngFor="let product of products; trackBy: trackByFn"
+          [product]="product"
+          [cart]="cart"
+          [currency]="currency"
+          (productUpdate)="onProductUpdate(product, $event)"
+        >
+        </mshop-product-list-item>
+      </mat-nav-list>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      [disabled]="products.length === 0"
+      mat-button
+      button="button"
+      (click)="checkout()"
+    >
+      CHECKOUT
+    </button>
+  </mat-card-actions>
 </mat-card>
 <mshop-hint-discount></mshop-hint-discount>

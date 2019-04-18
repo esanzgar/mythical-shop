@@ -1,18 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, pluck, tap } from 'rxjs/operators';
 
-import { StoreService } from '../../../store/store.service';
 import {
   Cart,
   CartItem,
   CartService
 } from '../../../shared/services/cart/cart.service';
-import {
-  Currency,
-  CurrencyService
-} from '../../../shared/services/currency/currency.service';
+import { Currency } from '../../../shared/services/currency/currency.service';
 
 @Component({
   selector: 'mshop-cart',
@@ -22,10 +19,7 @@ import {
 export class CartComponent implements OnInit, OnDestroy {
   cart!: Cart;
   currency!: Currency;
-  products$: Observable<CartItem[]> = this._store.select('cart').pipe(
-    tap(cart => (this.cart = cart)),
-    map(cart => Object.values(cart))
-  );
+  products!: CartItem[];
 
   form = this.fb.group({
     search: null
@@ -36,23 +30,28 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private _cart: CartService,
-    private _store: StoreService
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this._subscriptions = [
-      this._store
-        .select('currency')
-        .subscribe(currency => (this.currency = currency))
+      this._route.data
+        .pipe(
+          tap(({ currency }) => (this.currency = currency)),
+          pluck('cart'),
+          tap(cart => (this.cart = cart)),
+          tap(cart => (this.products = Object.values(cart)))
+        )
+        .subscribe()
     ];
-  }
-
-  onProductUpdate(product: CartItem, quantity: number) {
-    this._cart.update(product, quantity);
   }
 
   ngOnDestroy() {
     this._subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  onProductUpdate(product: CartItem, quantity: number) {
+    this._cart.update(product, quantity);
   }
 
   checkout() {

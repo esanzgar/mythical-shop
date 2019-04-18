@@ -13,6 +13,9 @@ import { BundleDiscountsService } from './services/bundle-discounts/bundle-disco
 import { ProductContentService } from './services/product-content/product-content.service';
 import { CurrencyService } from './services/currency/currency.service';
 import { HerokuInterceptor } from './services/heroku-interceptor/heroku-interceptor';
+import { ProductsResolverService } from './services/product-resolver/product-resolver.service';
+import { CartResolverService } from './services/cart-resolver/cart-resolver.service';
+import { CurrencyResolverService } from './services/currency-resolver/currency-resolver.service';
 
 import { GrandTotalComponent } from './containers/grand-total/grand-total.component';
 import { OrderComponent } from './components/order/order.component';
@@ -57,7 +60,10 @@ export class SharedModule {
         BundleDiscountsService,
         CurrencyService,
         ProductContentService,
-        HerokuInterceptor
+        HerokuInterceptor,
+        ProductsResolverService,
+        CartResolverService,
+        CurrencyResolverService
       ]
     };
   }
