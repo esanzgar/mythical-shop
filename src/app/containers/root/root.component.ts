@@ -27,7 +27,7 @@ export class RootComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._subscription = [
       this._cart.init().subscribe(),
-      this._currency.init().subscribe()
+      this._currency.init().subscribe() // TODO: catch errors finding currency
     ];
   }
 

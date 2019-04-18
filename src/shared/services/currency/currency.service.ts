@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { map, pluck, concatMap, tap } from 'rxjs/operators';
+import { concatMap, map, pluck, retry, tap } from 'rxjs/operators';
 
 import { StoreService } from '../../../store/store.service';
 
@@ -59,8 +59,9 @@ export class CurrencyService implements OnDestroy {
               map(rate => ({ ...currency, rate }))
             );
         }),
-        tap(newCurrency => this._store.set('currency', newCurrency))
-        // No need of catchError because the store set the default currency to USD.
+        tap(newCurrency => this._store.set('currency', newCurrency)),
+        retry(2)
+        // The currency value in the store has set the default currency to USD.
       );
   }
 }

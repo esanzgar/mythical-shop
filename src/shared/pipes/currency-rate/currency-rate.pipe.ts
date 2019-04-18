@@ -20,8 +20,13 @@ export class CurrencyRatePipe implements PipeTransform {
       name: 'United States dollar',
       symbol: '$',
       rate: 1
-    }
-  ): any {
-    return this.ngCurrencyPipe.transform(value * currency.rate, currency.code);
+    },
+    display: 'symbol' | string = 'symbol'
+  ): string | null {
+    return this.ngCurrencyPipe.transform(
+      value * currency.rate,
+      currency.code,
+      display
+    );
   }
 }

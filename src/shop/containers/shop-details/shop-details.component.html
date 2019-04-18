@@ -33,13 +33,13 @@
               [cart]="cart"
               (productUpdate)="onProductUpdate(product, $event)"
             ></mshop-order>
-            <button
+            <!--button
               mat-icon-button
               *ngIf="cart[product.id]"
               (click)="onProductUpdate(product, 0)"
             >
               <mat-icon>delete</mat-icon>
-            </button>
+            </button-->
           </div>
         </div>
 
