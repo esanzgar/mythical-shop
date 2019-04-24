@@ -10,6 +10,7 @@ import {
   Product,
   ProductsService
 } from '../../../shared/services/products/products.service';
+import { ProductContentService } from '../../../shared/services/product-content/product-content.service';
 
 @Component({
   selector: 'mshop-shop-details',
@@ -23,6 +24,7 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
 
   cart!: Cart;
   currency!: Currency;
+  description = 'Sorry, description is not available for this product';
 
   private _subscriptions: Subscription[] = [];
 
@@ -30,7 +32,8 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _store: StoreService,
     private _cartService: CartService,
-    private _products: ProductsService
+    private _products: ProductsService,
+    private _productContent: ProductContentService
   ) {}
 
   ngOnInit() {
@@ -61,5 +64,7 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
       }),
       finalize(() => (this.waiting = false))
     );
+
+    this.description = this._productContent.getDetails(id);
   }
 }
