@@ -15,7 +15,7 @@ git clone https://github.com/esanzgar/mythical-shop
 
 or
 
-git clone git@gitlab.ebi.ac.uk:esanzgar/mythical-shop
+git clone git@github.com:esanzgar/mythical-shop
 ```
 
 Otherwise, fork the repo, and submit pull requests.
